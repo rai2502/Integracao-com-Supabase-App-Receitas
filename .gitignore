@@ -1,0 +1,27 @@
+# dependências
+node_modules/
+
+# credenciais / variáveis de ambiente (Supabase) — nunca commitar
+.env
+.env.local
+.env.*.local
+
+# projeto nativo Android — mantemos a pasta android/ no repo (é o padrão do
+# Capacitor), mas ignoramos tudo que é gerado/baixado pelo Gradle/Android Studio
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/app/release/
+android/app/debug/
+*.iml
+.idea/
+.gradle/
+
+# sistema
+.DS_Store
+Thumbs.db
+
+# logs
+*.log

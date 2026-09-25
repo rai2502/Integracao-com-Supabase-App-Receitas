@@ -1,0 +1,273 @@
+/* ============================================
+   Fogo Baixo — folha de estilos
+   Sistema visual: caderno de receitas + selos de posto de gasolina/mercearia
+   ============================================ */
+
+::selection { background: #E3A730; color: #22261B; }
+
+html { scroll-behavior: smooth; }
+
+body { -webkit-tap-highlight-color: transparent; }
+
+/* textura sutil no header, tipo papel kraft */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(227,167,48,0.08) 0, transparent 45%),
+    radial-gradient(circle at 80% 10%, rgba(193,69,45,0.10) 0, transparent 40%);
+}
+
+.dial svg { transition: transform 0.6s cubic-bezier(.2,.8,.2,1); }
+a:hover .dial svg { transform: rotate(220deg); }
+
+/* linha de perfuração entre o header e o resto, como destacar a página de um caderno */
+.perfuration {
+  position: relative;
+  height: 18px;
+  background: #FBF6EC;
+  border-radius: 100% 100% 0 0 / 18px 18px 0 0;
+  margin-top: -1px;
+}
+.perfuration::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 18px;
+  background-image: radial-gradient(circle at 12px 0, #22261B 6px, transparent 6.5px);
+  background-size: 24px 18px;
+  background-repeat: repeat-x;
+}
+
+/* ---------- filtros ---------- */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.cat-pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(43,42,37,0.15);
+  color: rgba(43,42,37,0.55);
+  background: transparent;
+  transition: all 0.2s ease;
+}
+.cat-pill:hover { border-color: #C1452D; color: #C1452D; }
+.cat-pill.is-active {
+  background: #22261B;
+  color: #FBF6EC;
+  border-color: #22261B;
+}
+
+/* ---------- cartão de receita ---------- */
+.recipe-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 4px 4px 14px 14px;
+  box-shadow: 0 1px 2px rgba(43,42,37,0.06);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(43,42,37,0.08);
+}
+.recipe-card:hover {
+  transform: translateY(-4px) rotate(-0.3deg);
+  box-shadow: 0 18px 30px -14px rgba(43,42,37,0.35);
+}
+
+.recipe-card .swatch {
+  position: relative;
+  height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.recipe-card .swatch svg { width: 56px; height: 56px; }
+.recipe-card .recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.image-placeholder { display: flex; align-items: center; justify-content: center; }
+.image-placeholder svg { width: 56px; height: 56px; }
+
+.modal-recipe-image {
+  width: calc(100% + 3rem);
+  height: 190px;
+  object-fit: cover;
+  margin: -2.25rem -1.5rem 1.5rem;
+  border-radius: 20px 20px 0 0;
+}
+@media (min-width: 640px) {
+  .modal-recipe-image {
+    width: calc(100% + 4.5rem);
+    margin: -2.25rem -2.25rem 1.5rem;
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+/* selo/postmark com o tempo de preparo */
+.stamp {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  background: rgba(251,246,236,0.92);
+  color: #22261B;
+  border: 1px dashed rgba(43,42,37,0.4);
+  border-radius: 999px;
+  padding: 3px 9px;
+  transform: rotate(6deg);
+}
+
+.recipe-card .accent-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+}
+
+.recipe-card .body { padding: 1.1rem 1.15rem 1rem; }
+
+.diff-dots { display: inline-flex; gap: 3px; vertical-align: middle; }
+.diff-dots span { width: 5px; height: 5px; border-radius: 50%; background: rgba(43,42,37,0.15); display: inline-block; }
+.diff-dots span.on { background: #C1452D; }
+
+.fav-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 32px; height: 32px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(43,42,37,0.1);
+  transition: transform 0.15s ease;
+}
+.fav-btn:hover { transform: scale(1.1); }
+.fav-btn svg { width: 15px; height: 15px; stroke: #C1452D; fill: none; transition: fill 0.15s ease; }
+.fav-btn.is-fav svg { fill: #C1452D; }
+
+/* ---------- botões da ponte nativa ---------- */
+.ponte-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  background: rgba(251,246,236,0.06);
+  border: 1px solid rgba(251,246,236,0.15);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.ponte-btn:hover { border-color: #E3A730; background: rgba(251,246,236,0.1); }
+.ponte-icon { font-size: 1.6rem; line-height: 1; }
+
+/* ---------- modal ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(34,38,27,0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 50;
+  padding: 0;
+}
+@media (min-width: 640px) {
+  .modal-backdrop { align-items: center; padding: 1.5rem; }
+}
+.modal-backdrop.hidden { display: none; }
+
+.modal-card {
+  position: relative;
+  background: #FBF6EC;
+  width: 100%;
+  max-width: 560px;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 20px 20px 0 0;
+  padding: 1.75rem 1.5rem 2.25rem;
+  animation: sheetUp 0.28s cubic-bezier(.2,.8,.2,1);
+}
+@media (min-width: 640px) {
+  .modal-card { border-radius: 20px; padding: 2.25rem; }
+}
+@keyframes sheetUp { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  background: rgba(43,42,37,0.06);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #2B2A25;
+}
+
+.ingredient-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed rgba(43,42,37,0.15);
+  font-size: 0.9rem;
+}
+.ingredient-list li:last-child { border-bottom: none; }
+.ingredient-list .qty { font-family: 'Space Mono', monospace; color: #C1452D; white-space: nowrap; }
+
+.step-list { counter-reset: step; }
+.step-list li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.4rem;
+  margin-bottom: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0; top: -0.1rem;
+  width: 1.7rem; height: 1.7rem;
+  border-radius: 50%;
+  background: #22261B;
+  color: #E3A730;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ---------- toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  background: #22261B;
+  color: #FBF6EC;
+  font-size: 0.85rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(227,167,48,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 60;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
